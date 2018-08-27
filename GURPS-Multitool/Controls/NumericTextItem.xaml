@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="GURPS_Multitool.Controls.NumericTextItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GURPS_Multitool.Controls"
+             mc:Ignorable="d" 
+             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+             Margin="0" 
+             MinWidth="250" MinHeight="25"
+             >
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="60" MaxWidth="80"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <local:CounterUpDown x:Name="num_Count" Grid.Row="0" Grid.Column="0" MinWidth="60" 
+                           Counter="{Binding ItemsCount, Mode=TwoWay}" Height="30" 
+                             ValueChanged="Num_Count_OnValueChanged"
+                             ValueChangebyControl="Num_Count_OnValueChanged"
+                           Margin="0,2,0,0"  VerticalAlignment="Top"/>
+        <TextBox x:Name="txt_Header" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" MinHeight="30" MinWidth="60"
+                     FontSize="14" FontFamily="/GURPS-Multitool;component/#Acherus Grotesque"
+                     FontWeight="DemiBold" TextWrapping="Wrap" Background="Transparent"
+                     Margin="4,2,2,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                     VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+                     Text="{Binding Header}" TextChanged="Txt_Header_OnTextChanged"/>
+        <Expander ExpandDirection="Right" Grid.Row="2" Grid.ColumnSpan="2"
+                  Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <TextBox x:Name="txt_Description" MinHeight="64" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                     FontSize="12" FontFamily="/GURPS-Multitool;component/#Acherus Grotesque"
+                     TextWrapping="Wrap" AcceptsReturn="True"
+                     Background="Transparent"
+                     Margin="0" VerticalContentAlignment="Top"
+                     Text="{Binding Description}" TextChanged="Txt_Header_OnTextChanged"/>
+        </Expander>
+    </Grid>
+</UserControl>

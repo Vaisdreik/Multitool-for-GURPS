@@ -328,3 +328,9 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+GURPS-Multitool.sln
+GURPS-Multitool/Properties/Settings.Designer.cs
+GURPS-Multitool/Properties/Resources.resx
+GURPS-Multitool/Properties/Resources.Designer.cs
+GURPS-Multitool/Properties/AssemblyInfo.cs
+GURPS-Multitool/Properties/Annotations.cs

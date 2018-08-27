@@ -1,0 +1,509 @@
+﻿<Window x:Class="GURPS_Multitool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:controls="clr-namespace:GURPS_Multitool.Controls"
+        mc:Ignorable="d"
+        Title="MainWindow" x:Name="WorkWindow"
+        MinHeight="500" Height="700" MinWidth="320" Width="320">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition MaxHeight="22"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1"/>
+        </Grid.RowDefinitions>
+
+        <Menu x:Name="MainMenu" Grid.Row="0">
+            <MenuItem Header="File" Height="20" FontSize="14">
+                <MenuItem Header="New" FontSize="14"  />
+                <MenuItem Header="Delete" FontSize="14"  />
+                <MenuItem Header="Open" FontSize="14"  />
+
+                <MenuItem Header="Save" FontSize="14"  />
+                <MenuItem Header="Save as..." FontSize="14" />
+                <Separator />
+                <MenuItem Header="Exit" FontSize="14" />
+            </MenuItem>
+            <MenuItem Header="Tools" Height="20" FontSize="14">
+                <MenuItem Header="Settings" FontSize="14">
+                    <CheckBox x:Name="menu_option_developer" FontSize="14" Content="Режим разработчика" Checked="Menu_option_developer_OnChecked" Unchecked="Menu_option_developer_OnUnchecked"></CheckBox>
+
+                </MenuItem>
+                <MenuItem Header="Load from" FontSize="14" />
+            </MenuItem>
+            <MenuItem Header="Help" Height="20" FontSize="14">
+                <MenuItem Header="About" FontSize="14"/>
+            </MenuItem>
+        </Menu>
+
+        <Button x:Name="btn_SaveCharacter" Margin="5,1" Grid.Row="1" Width="20" Height="20" 
+                Visibility="Visible" HorizontalAlignment="Left"
+                Click="Btn_SaveCharacter_OnClick">
+            <Button.Content>
+                <Image Source="Images/save.png">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Button.Content>
+        </Button>
+
+        <TabControl x:Name="TabsViewer" Grid.Row="2">
+            <TabItem x:Name="tab_Character" Header="Персонаж" Visibility="Visible">
+                <TabItem.Content>
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <controls:NumerUpDown x:Name="num_ST" Width="40" Height="30" Margin="5,0,0,2" MinValue="0" NumValue="10" 
+                                                  ValueChanged="Num_Attributes_OnValueChanged"/>
+                                <TextBlock Text="ST" Margin="4,0,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <controls:NumerUpDown x:Name="num_DX" Width="40" Height="30" Margin="5,0,0,2" MinValue="0" NumValue="10" 
+                                                  ValueChanged="Num_Attributes_OnValueChanged"/>
+                                <TextBlock Text="DX" Margin="4,0,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <controls:NumerUpDown x:Name="num_IQ" Width="40" Height="30" Margin="5,0,0,2" MinValue="0" NumValue="10" 
+                                                  ValueChanged="Num_IQ_OnValueChanged"/>
+                                <TextBlock Text="IQ" Margin="4,0,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <controls:NumerUpDown x:Name="num_HT" Width="40" Height="30" Margin="5,0,0,2" MinValue="0" NumValue="10" 
+                                                  ValueChanged="Num_Attributes_OnValueChanged"/>
+                                <TextBlock Text="HT" Margin="4,0,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <controls:NumerUpDown x:Name="num_CraftSkillLvl" Width="40" Height="30" Margin="5,0,0,2" MinValue="0" NumValue="10" ValueChangebyControl="Num_CraftSkillLvl_OnValueChangebyControl" ValueChanged="Num_CraftSkillLvl_OnValueChanged"/>
+                                <TextBox x:Name="txt_CraftSkillName" Text="Навык крафта" Margin="4,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="Уровень навыка, используемого&#x0a;для крафта (wildcard-навык &#x0a;или любой другой)"/>
+                                <TextBlock x:Name="txbl_PointInCraftSkill" MaxHeight="30" Width="90" Margin="5,0" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" TextAlignment="Left" Text="0 points"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <controls:NumerUpDown x:Name="num_WP" IsChangable="False" IsTextReadOnly="True" Width="40" Height="30" Margin="5,0,0,2" MinValue="0" NumValue="0" MaxValue="2"/>
+                                <TextBlock Text="Wild Points(WP)" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="Уровень гаджетира:&#x0a;0 - нет преимущества Gadgeteer;&#x0a;1 - Gadgeteer;&#x0a;2 - Quick Gadgeteer."/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <controls:NumerUpDown x:Name="num_WCHalfBonus" IsChangable="False" IsTextReadOnly="True" Width="40" Height="30" Margin="5,0,0,2" MinValue="0" NumValue="0" ValueChanged="Num_WCHalfBonus_OnValueChanged"/>
+                                <TextBlock Text="WC Half Bonus" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="Величина Half Bonus wildcard-навыка &#x0a;
+Points   Skill      WP   HalfBonus&#x0a;
+   3    Attribute-3    0       0&#x0a;
+   6    Attribute-2    0       0&#x0a;
+  12   Attribute-1    1       0&#x0a;
+  24   Attribute+0   2       0&#x0a;
+  36   Attribute+1   3     +1&#x0a;
+  48   Attribute+2   4     +1&#x0a;
+  60   Attribute+3   5     +2&#x0a;
+  72   Attribute+4   6     +2&#x0a;
++12        +1          +1   +1/2 (round up)"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <controls:NumerUpDown x:Name="num_GadgeteerLvl" Width="40" Height="30" Margin="5,0,0,2" MinValue="0" NumValue="2" MaxValue="2" Loaded="Num_GadgeteerLvl_OnLoaded" ValueChanged="Num_GadgeteerLvl_OnValueChanged"/>
+                                <TextBlock Text="Гаджетир" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="Уровень гаджетира:&#x0a;0 - нет преимущества Gadgeteer;&#x0a;1 - Gadgeteer;&#x0a;2 - Quick Gadgeteer."/>
+                            </StackPanel>
+
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="tab_Gadgeteering">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Крафт</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <Expander Header="Список крафта" FontSize="16" IsExpanded="False">
+                                <StackPanel Orientation="Vertical">
+                                    <ListBox x:Name="lst_SavedGadgets" SelectionMode="Single"
+                                             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                             SelectedIndex="0">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid HorizontalAlignment="Stretch">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="30"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" HorizontalAlignment="Stretch" Height="30"
+                                                               FontSize="12" FontWeight="DemiBold" Text="{Binding Name}"/>
+                                                    <CheckBox Grid.Column="1" HorizontalAlignment="Right"
+                                                              IsChecked="{Binding IsFinished}" 
+                                                              Click="ButtonBase_OnClick"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button x:Name="btn_SaveGadget" Width="80" Height="25" 
+                                                Content="Сохранить" Margin="10,2" Click="Btn_SaveGadget_OnClick"/>
+                                        <Button x:Name="btn_LoadGadget" Width="80" Height="25" 
+                                                Content="Загрузить" Margin="10,2" Click="Btn_LoadGadget_OnClick"/>
+                                        <Button x:Name="btn_DeleteGadget" Width="80" Height="25" 
+                                                Content="Удалить" Margin="10,2" Click="Btn_DeleteGadget_OnClick"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Expander>
+                            <TextBlock Text="Название гаджета" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"/>
+                            <TextBox x:Name="txt_GadgetName" Width="Auto" Margin="5,0,5,2" VerticalContentAlignment="Center" FontWeight="Normal" Text="typical electronic"
+                                     KeyUp="Txt_GadgetName_OnKeyUp" LostFocus="Txt_GadgetName_OnLostFocus"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="txt_GadgetPoints" Width="80" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                                         Margin="5,2,5,2" FontWeight="Normal" Text="0" KeyUp="Txt_GadgetPoints_OnKeyUp" LostFocus="Txt_GadgetPoints_OnLostFocus" />
+                                <TextBlock Text="&quot;Total points&quot; гаджета" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Сложность:" Margin="5,4,5,2" VerticalAlignment="Center" FontWeight="Normal" FontSize="14" Width="80"/>
+                                <TextBlock x:Name="txb_Complexity" Text="600" Margin="10,4,5,2" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="15"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <controls:NumerUpDown x:Name="num_TechLevel" Width="40" Height="25" Margin="5,2,0,2" MinValue="0" NumValue="9" MaxValue="13" IsTextReadOnly="True" ValueChanged="Num_TechLevel_OnValueChanged"/>
+                                <TextBlock Text="TL (технический уровень)" Margin="10,0,5,2" VerticalAlignment="Center" FontWeight="Normal" FontSize="14"/>
+                            </StackPanel>
+
+                            <Expander Header="Концепт" FontSize="16" IsExpanded="True" Background="Beige">
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:NumerUpDown x:Name="num_ConceptTime" Width="40" Height="25" Margin="5,2,0,2" MinValue="0" MaxValue="5" IsTextReadOnly="True" 
+                                                              ValueChanged="Num_ConceptTime_OnValueChanged" />
+                                        <TextBlock Text="бонус от времени" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="+1 к навыку = x2 ко времени;&#x0a;+2 к навыку = x4;&#x0a;+3 к навыку = x8;&#x0a;+4 к навыку = x15;&#x0a;+5 к навыку = x30."/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:NumerUpDown x:Name="num_ConceptDiceOnTime" Width="40" Height="25" Margin="5,2,0,2" NumValue="1" MinValue="1" MaxValue="6"
+                                                              ValueChanged="Num_ConceptDiceOnTime_OnValueChanged"/>
+                                        <TextBlock Text="результат броска" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="Результат броска для определения&#x0a;затрат по времени на разработку концепта&#x0a;1d - для gadgeteer;&#x0a;(1d-2) - для quick gadgeteer."/>
+                                    </StackPanel>
+                                    <TextBlock x:Name="txb_ConceptTotalTime" Text="Общее время: 4 мин." Margin="10,2,5,0" VerticalAlignment="Center" 
+                                               FontWeight="Normal" FontSize="16"/>
+                                    <CheckBox x:Name="chkbx_ConceptIsUseWCHalfBonus" FontWeight="Normal" Content="Использовать &quot;WC Half Bonus&quot;" Click="Chkbx_ConceptIsUseWCHalfBonus_OnChecked"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:NumerUpDown x:Name="num_ConceptHelpBonus" Width="40" Height="25" VerticalAlignment="Top" Margin="5,2,0,2"
+                                                              NumValue="1" MinValue="1" MaxValue="6" ValueChanged="Num_ConceptHelpBonus_OnValueChanged"/>
+                                        <Expander Header="Бонус от помощников" FontSize="16" FontWeight="Normal" IsExpanded="False">
+                                            <TextBox x:Name="txt_ConceptHelpers" Height="90" Margin="10,2,10,2" TextWrapping="Wrap" AcceptsReturn="True" LostFocus="Txt_ConceptHelpers_OnLostFocus"/>
+                                        </Expander>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:NumerUpDown x:Name="num_ConceptWP" Width="40" Height="25" Margin="5,2,0,2" MinValue="0" ValueChanged="Num_ConceptWP_OnValueChanged"/>
+                                        <TextBlock Text="WP" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="Кол-во используемых WildPoints" />
+                                    </StackPanel>
+                                    <TextBlock x:Name="txb_ConceptEffectiveSkill" Text="Эффективный скилл: " Margin="10,2,5,0" VerticalAlignment="Center"
+                                               FontWeight="Normal" FontSize="16"/>
+                                    <TextBlock x:Name="txb_ConceptFormula" Text="" Margin="10,2,5,2" VerticalAlignment="Center"
+                                               FontWeight="Normal" FontSize="12" TextWrapping="Wrap">
+                                        <TextBlock.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Copy" Click="CopyConceptSkillFormula_OnClick"></MenuItem>
+                                            </ContextMenu>
+                                        </TextBlock.ContextMenu>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Expander>
+                            <Expander Header="Прототип" FontSize="16" IsExpanded="True" Background="Linen">
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:NumerUpDown x:Name="num_PrototypeTime" Width="40" Height="25" Margin="5,2,0,2" MinValue="0" MaxValue="5" IsTextReadOnly="True"
+                                                              ValueChanged="Num_PrototypeTime_OnValueChanged"/>
+                                        <TextBlock Text="бонус от времени" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="+1 к навыку = x2 ко времени;&#x0a;+2 к навыку = x4;&#x0a;+3 к навыку = x8;&#x0a;+4 к навыку = x15;&#x0a;+5 к навыку = x30."/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:NumerUpDown x:Name="num_PrototypeDiceOnTime" Width="40" Height="25" Margin="5,2,0,2" NumValue="1" MinValue="1" MaxValue="6"
+                                                              ValueChanged="Num_PrototypeDiceOnTime_OnValueChanged"/>
+                                        <TextBlock Text="результат броска" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="Результат броска 1d x (complexity^2)/20000 &#x0a; для определения затрат времени &#x0a; на разработку прототипа&#x0a; 8-часовых раб. дней - для gadgeteer;&#x0a; минут - для quick gadgeteer."/>
+                                    </StackPanel>
+                                    <TextBlock x:Name="txb_PrototypeTotalTime" Text="Общее время: 6 мин." Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"/>
+                                    <CheckBox x:Name="chkbx_PrototypeIsUseWCHalfBonus" FontWeight="Normal" Content="Использовать &quot;WC Half Bonus&quot;" Click="Chkbx_PrototypeIsUseWCHalfBonus_OnChecked"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:NumerUpDown x:Name="num_PrototypeHelpBonus" Width="40" Height="25" VerticalAlignment="Top" Margin="5,2,0,2"
+                                                              NumValue="1" MinValue="1" MaxValue="6" ValueChanged="Num_PrototypeHelpBonus_OnValueChanged"/>
+                                        <Expander Header="Бонус от помощников" FontSize="16" FontWeight="Normal" IsExpanded="False">
+                                            <TextBox x:Name="txt_PrototypeHelpers" Height="90" Margin="10,2,10,2" TextWrapping="Wrap" AcceptsReturn="True" LostFocus="Txt_PrototypeHelpers_OnLostFocus"></TextBox>
+                                        </Expander>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:NumerUpDown x:Name="num_PrototypeWP" Width="40" Height="25" Margin="5,2,0,2" MinValue="0" ValueChanged="Num_PrototypeWP_OnValueChanged"/>
+                                        <TextBlock Text="WP" Margin="10,2,5,0" VerticalAlignment="Center" FontWeight="Normal" FontSize="16"
+                                                   ToolTip="Кол-во используемых WildPoints"/>
+                                    </StackPanel>
+                                    <TextBlock x:Name="txb_PrototypeEffectiveSkill" Text="Эффективный скилл: " Margin="10,2,5,0" VerticalAlignment="Center"
+                                               FontWeight="Normal" FontSize="16"/>
+                                    <TextBlock x:Name="txb_PrototypeFormula" Text="" Margin="10,2,5,2" VerticalAlignment="Center"
+                                               FontWeight="Normal" FontSize="12" TextWrapping="Wrap" >
+                                        <TextBlock.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Copy" Click="CopyPrototypeSkillFormula_OnClick"></MenuItem>
+                                            </ContextMenu>
+                                        </TextBlock.ContextMenu>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Expander>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="tab_Armouring" Header="Крафт брони">
+
+            </TabItem>
+            <TabItem x:Name="tab_Gunnering" Header="Бластеры">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
+                        <ComboBox x:Name="cmbx_WeaponsType" Width="150">
+                            <ComboBoxItem Content="Laser (TL9)" />
+                            <ComboBoxItem Content="Force Beam (TL10^)" />
+                            <ComboBoxItem Content="Blaster (TL10/11*)" />
+                            <ComboBoxItem Content="Rainbow Laser (TL11)" />
+                            <ComboBoxItem Content="X-Ray Laser (TL11)" />
+                            <ComboBoxItem Content="Laser (TL9)" />
+                            <ComboBoxItem Content="Laser (TL9)" />
+                        </ComboBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem x:Name="tab_Shooting" Header="Стрельба">
+                <StackPanel Orientation="Vertical" Margin="2,4">
+                    <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="3" 
+                                VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                        <controls:NumerUpDown x:Name="num_ShootSkillLvl" Width="40" Height="30" Margin="2,0,0,2" 
+                                              MinValue="0" NumValue="10" HorizontalAlignment="Left"
+                                              ValueChangebyControl="Num_ShootSkillLvl_OnValueChangebyControl" 
+                                              ValueChanged="Num_ShootSkillLvl_OnValueChangebyControl"/>
+                        <TextBox x:Name="txt_ShooSkillName" Text="Навык стрельбы" Margin="4,0,0,0" MinWidth="80"
+                                 VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                 FontWeight="Normal" FontSize="16"
+                                 TextChanged="Txt_ShooSkillName_OnTextChanged"
+                                 ToolTip="Уровень навыка, используемого&#x0a;для стрельбы (wildcard-навык &#x0a;или любой другой)"/>
+                        <TextBlock x:Name="txb_PointInShootingSkill" MaxHeight="30" Width="90" Margin="5,0" 
+                                   FontSize="12" FontWeight="Normal" 
+                                   VerticalAlignment="Center" TextAlignment="Left" 
+                                   Text="0 points"></TextBlock>
+                    </StackPanel>
+                    <Expander Header="WILDCARD" IsExpanded="True">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Margin="2,3">
+                                <controls:NumerUpDown x:Name="num_ShootingHalfHBonus" Width="40" Height="25" NumValue="0" MinValue="0" 
+                                              IsTextReadOnly="True" IsChangable="False"/>
+                                <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Half Bonus"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="2,3">
+                                <controls:NumerUpDown x:Name="num_ShootingWPUsed" Width="40" Height="25" NumValue="0" MinValue="0" 
+                                               ValueChanged="Num_ShootingWPUsed_OnValueChanged" ValueChangebyControl="Num_ShootingWPUsed_OnValueChanged"/>
+                                <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Используемых WP"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="2,3">
+                                <controls:NumerUpDown x:Name="num_ShootingWPRemain" Width="40" Height="25" NumValue="0" MinValue="0" 
+                                              IsTextReadOnly="True" IsChangable="False"/>
+                                <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="WP осталось"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander>
+
+
+                    <StackPanel Orientation="Horizontal" Margin="2,3">
+                        <controls:NumerUpDown x:Name="num_AimBonus" Width="40" Height="25" NumValue="0" MinValue="0" 
+                                               ValueChanged="Num_AimBonus_OnValueChanged" ValueChangebyControl="Num_AimBonus_OnValueChanged"/>
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Бонус от прицеливания (точность)"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="2,3">
+                        <controls:NumerUpDown x:Name="num_TargetSize" Width="40" Height="25" NumValue="0" MinValue="-10" 
+                                              ValueChanged="Num_TargetSize_OnValueChanged" ValueChangebyControl="Num_TargetSize_OnValueChanged"/>
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="SM цели(модификатор размера)"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="2,3">
+                        <controls:NumerUpDown x:Name="num_DistanceSpeed" Width="40" Height="25" NumValue="0" MinValue="0" 
+                                              ValueChanged="Num_DistanceSpeed_OnValueChanged" ValueChangebyControl="Num_DistanceSpeed_OnValueChanged"/>
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Дистанция/скорость(в метрах)"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="2,3">
+                        <ComboBox x:Name="cmbx_RateOfFire" Width="110" SelectionChanged="Cmbx_RateOfFire_OnSelectionChanged">
+                            <ComboBoxItem Content="2-4          (+0)" IsSelected="True"/>
+                            <ComboBoxItem Content="5-8          (+1)"/>
+                            <ComboBoxItem Content="9-12        (+2)"/>
+                            <ComboBoxItem Content="13-16      (+3)"/>
+                            <ComboBoxItem Content="17-24      (+4)"/>
+                            <ComboBoxItem Content="25-49      (+5)"/>
+                            <ComboBoxItem Content="50-99      (+6)"/>
+                            <ComboBoxItem Content="100-199  (+7)"/>
+                            <ComboBoxItem Content="200-399  (+8)"/>
+                        </ComboBox>
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Кол-во выстрелов"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="2,3">
+                        <controls:NumerUpDown x:Name="num_OtherBonus" Width="40" Height="25" NumValue="0" MinValue="0" 
+                                              ValueChanged="Num_OtherBonus_OnValueChanged" ValueChangebyControl="Num_OtherBonus_OnValueChanged"/>
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Дополнительный бонус/штраф"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="2,3">
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Эффективный навык:"/>
+                        <TextBlock x:Name="txb_ShootingEffectSkill" Margin="10,2" FontSize="18" FontWeight="DemiBold"
+                                   VerticalAlignment="Center" Text="12"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="tab_Jumping" Header="Прыжки">
+                <StackPanel Orientation="Vertical" Margin="2,4">
+                    <StackPanel Orientation="Horizontal" Margin="0,3">
+                        <controls:NumerUpDown x:Name="num_BasicMove" Width="40" Height="25" NumValue="5" MinValue="0" 
+                                              ValueChanged="Num_BasicMove_OnValueChangebyControl" ValueChangebyControl="Num_BasicMove_OnValueChangebyControl"></controls:NumerUpDown>
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Базовое движени(Basic move)"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,3">
+                        <controls:NumerUpDown x:Name="num_JumpingSkill" Width="40" Height="25" NumValue="5" MinValue="0" 
+                                              ValueChanged="Num_JumpingSkill_OnValueChangebyControl" ValueChangebyControl="Num_JumpingSkill_OnValueChangebyControl"></controls:NumerUpDown>
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Навык прыжков(Jumping)"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,3">
+                        <controls:NumerUpDown x:Name="num_SuperJump" Width="40" Height="25" MinValue="0"
+                                              ValueChanged="Num_SuperJump_OnValueChangebyControl"  ValueChangebyControl="Num_SuperJump_OnValueChangebyControl"></controls:NumerUpDown>
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="SuperJump"/>
+                    </StackPanel>
+                    <CheckBox x:Name="chbx_FlyingLeap" Content="Flying Leap" Margin="0,1" FontSize="14" Checked="Chbx_FlyingLeap_CheckChange" Unchecked="Chbx_FlyingLeap_CheckChange"></CheckBox>
+                    <CheckBox x:Name="chbx_InCombat" Content="В бою" Margin="0,1"  FontSize="14" Checked="Chbx_InCombat_CheckChange" Unchecked="Chbx_InCombat_CheckChange"></CheckBox>
+                    <CheckBox x:Name="chbx_Running" Content="С разбегом" Margin="0,1"  FontSize="14" Checked="Chbx_Running_CheckChange" Unchecked="Chbx_Running_CheckChange"></CheckBox>
+                    <StackPanel x:Name="stp_running" Orientation="Horizontal" Visibility="Collapsed" Margin="0,3">
+                        <controls:NumerUpDown x:Name="num_Running" Width="40" Height="25" MinValue="1" NumValue="1" 
+                                              ValueChanged="Num_Running_OnValueChangebyControl" ValueChangebyControl="Num_Running_OnValueChangebyControl"></controls:NumerUpDown>
+                        <TextBlock Margin="10,2" FontSize="14" VerticalAlignment="Center" Text="Разбег"/>
+                    </StackPanel>
+                    <Expander x:Name="exp_JumpInHigh" Header="Прыжок в высоту = 0" FontSize="14" FontWeight="DemiBold">
+                        <TextBlock x:Name="txb_JumpInHighFormula" TextWrapping="Wrap" FontWeight="Normal" FontSize="12" Text="Formula"></TextBlock>
+                    </Expander>
+                    <Expander x:Name="exp_JumpInLong" Header="Прыжок в длину = 0" FontSize="14" FontWeight="DemiBold">
+                        <TextBlock x:Name="txb_JumpInLongFormula" TextWrapping="Wrap" FontWeight="Normal" FontSize="12" Text="Formula"></TextBlock>
+                    </Expander>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem x:Name="tab_MyItems" Header="Вещи">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Vertical" Grid.Row="0">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Background="#FFE6E6E6">
+                            <Button x:Name="btn_AddItem" Margin="2,0" Width="30" Height="30" 
+                                    Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" 
+                                    Click="Btn_AddItem_OnClick">
+                                <Button.Content>
+                                    <Image Source="Images/add.png"></Image>
+                                </Button.Content>
+                            </Button>
+                            <Button x:Name="btn_DeleteItem" Margin="2,0" Width="30" Height="30" 
+                                    Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}"
+                                    Click="Btn_DeleteItem_OnClick">
+                                <Button.Content>
+                                    <Image Source="Images/delete.png"></Image>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <ListBox x:Name="lst_Items" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                 HorizontalContentAlignment="Left">
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <Border BorderThickness="0" CornerRadius="0">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
+                                                  VerticalScrollBarVisibility="Visible" 
+                                                  HorizontalAlignment="Right">
+                                        <ScrollViewer.Resources>
+                                            <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
+                                        </ScrollViewer.Resources>
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Border>
+                            </ControlTemplate>
+                        </ListBox.Template>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <controls:NumericTextItem ItemChanged="Num_Attributes_OnValueChanged"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tab_MyNotes" Header="Заметки">
+                <StackPanel Orientation="Vertical" CanHorizontallyScroll="False">
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Background="#FFE6E6E6">
+                        <Button x:Name="btn_AddNote" Margin="2,0" Width="30" Height="30" 
+                                Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" 
+                                Click="Btn_AddNote_OnClick">
+                            <Button.Content>
+                                <Image Source="Images/add.png"></Image>
+                            </Button.Content>
+                        </Button>
+                        <Button x:Name="btn_DeleteNote" Margin="2,0" Width="30" Height="30" 
+                                Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}"
+                                Click="Btn_DeleteNote_OnClick">
+                            <Button.Content>
+                                <Image Source="Images/delete.png"></Image>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    <ListBox x:Name="lst_Notes" Height="500" SelectionChanged="Lst_Notes_OnSelectionChanged">
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <Border BorderThickness="0" CornerRadius="0">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
+                                                  VerticalScrollBarVisibility="Visible" 
+                                                  HorizontalAlignment="Right">
+                                        <ScrollViewer.Resources>
+                                            <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
+                                        </ScrollViewer.Resources>
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Border>
+                            </ControlTemplate>
+                        </ListBox.Template>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <controls:NoteControl NoteChanged="Num_Attributes_OnValueChanged"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </StackPanel>
+
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

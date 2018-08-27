@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="GURPS_Multitool.Controls.NoteControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GURPS_Multitool.Controls"
+             mc:Ignorable="d" 
+             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+             MinWidth="250" MinHeight="25"
+             >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBox x:Name="txt_Header" Grid.Row="0" Grid.Column="0" MinWidth="120" 
+                 FontSize="14" FontFamily="/GURPS-Multitool;component/#Acherus Grotesque" 
+                 Text="{Binding Title}" TextChanged="Txt_Header_OnTextChanged"
+                 HorizontalAlignment="Stretch"/>
+        <TextBlock x:Name="txb_Date" Grid.Row="1" Grid.Column="0" Height="20" Margin="0,1,0,0" 
+                   Text="{Binding DateTimeShort}"
+                   FontFamily="/GURPS-Multitool;component/#Acherus Grotesque" FontSize="12" 
+                   HorizontalAlignment="Left"/>
+        <Expander x:Name="exp_NoteWithDate" Margin="0" 
+                  Grid.Row="2" Grid.ColumnSpan="2" ExpandDirection="Right"
+                  HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <TextBox x:Name="txt_Note" MinHeight="40" AcceptsReturn="True"
+                     Text="{Binding Text}" TextChanged="Txt_Header_OnTextChanged"
+                     HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                     FontSize="12" FontFamily="/GURPS-Multitool;component/#Acherus Grotesque"></TextBox>
+        </Expander>
+    </Grid>
+</UserControl>
